@@ -23,11 +23,14 @@ jobs:
         run: |
           xcodebuild -project Ice.xcodeproj -scheme Ice \
             -derivedDataPath DerivedData \
-            -configuration Release \
             build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-      - name: Upload .app
+      - name: Package .app
+        run: |
+          APP_PATH=$(find DerivedData -name "Ice.app" -type d -maxdepth 5 | head -1)
+          echo "Found .app at: $APP_PATH"
+          ditto -c -k --keepParent "$APP_PATH" Ice-app.zip
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Ice.app
-          path: DerivedData/Build/Products/Release/Ice.app
-          compression-level: 0
+          name: Ice-app
+          path: Ice-app.zip
