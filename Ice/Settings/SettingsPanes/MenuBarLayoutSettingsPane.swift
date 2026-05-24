@@ -25,7 +25,7 @@ struct MenuBarLayoutSettingsPane: View {
 
     @ViewBuilder
     private var header: some View {
-        Text(loc.localized(.dragToArrange))
+        Text(loc.localizedKey(.dragToArrange))
             .font(.title2)
 
         IceGroupBox {
@@ -34,7 +34,7 @@ struct MenuBarLayoutSettingsPane: View {
                 font: .callout.bold()
             ) {
                 Label {
-                    Text(loc.localized(.dragTip))
+                    Text(loc.localizedKey(.dragTip))
                 } icon: {
                     Image(systemName: "lightbulb")
                 }
@@ -53,7 +53,7 @@ struct MenuBarLayoutSettingsPane: View {
 
     @ViewBuilder
     private var cannotArrange: some View {
-        Text(loc.localized(.cannotArrangeInHiddenMenuBar))
+        Text(loc.localizedKey(.cannotArrangeInHiddenMenuBar))
             .font(.title3)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
@@ -61,13 +61,13 @@ struct MenuBarLayoutSettingsPane: View {
     @ViewBuilder
     private var missingScreenRecordingPermission: some View {
         VStack {
-            Text(loc.localized(.layoutRequiresPermissions))
+            Text(loc.localizedKey(.layoutRequiresPermissions))
                 .font(.title2)
 
             Button {
                 appState.navigationState.settingsNavigationIdentifier = .advanced
             } label: {
-                Text(loc.localized(.goToAdvancedSettings))
+                Text(loc.localizedKey(.goToAdvancedSettings))
             }
             .buttonStyle(.link)
         }
@@ -80,7 +80,7 @@ struct MenuBarLayoutSettingsPane: View {
             section.isEnabled
         {
             VStack(alignment: .leading, spacing: 4) {
-                Text("\(loc.localizedKey(section.name.localizationKey)) \(loc.localized(.section))")
+                Text("\(loc.localizedKey(section.name.localizationKey)) \(loc.localizedKey(.section))")
                     .font(.system(size: 14))
                     .padding(.leading, 2)
 

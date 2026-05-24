@@ -16,14 +16,14 @@ struct HotkeysSettingsPane: View {
 
     var body: some View {
         IceForm {
-            IceSection(loc.localized(.menuBarSections)) {
+            IceSection(loc.localizedKey(.menuBarSections)) {
                 hotkeyRecorder(forSection: .hidden)
                 hotkeyRecorder(forSection: .alwaysHidden)
             }
-            IceSection(loc.localized(.menuBarItems)) {
+            IceSection(loc.localizedKey(.menuBarItems)) {
                 hotkeyRecorder(forAction: .searchMenuBarItems)
             }
-            IceSection(loc.localized(.other)) {
+            IceSection(loc.localizedKey(.other)) {
                 hotkeyRecorder(forAction: .enableIceBar)
                 hotkeyRecorder(forAction: .showSectionDividers)
                 hotkeyRecorder(forAction: .toggleApplicationMenus)
@@ -37,17 +37,17 @@ struct HotkeysSettingsPane: View {
             HotkeyRecorder(hotkey: hotkey) {
                 switch action {
                 case .toggleHiddenSection:
-                    Text(loc.localized(.toggleHiddenSection))
+                    Text(loc.localizedKey(.toggleHiddenSection))
                 case .toggleAlwaysHiddenSection:
-                    Text(loc.localized(.toggleAlwaysHiddenSection))
+                    Text(loc.localizedKey(.toggleAlwaysHiddenSection))
                 case .searchMenuBarItems:
-                    Text(loc.localized(.searchMenuBarItems))
+                    Text(loc.localizedKey(.searchMenuBarItems))
                 case .enableIceBar:
-                    Text(loc.localized(.enableIceBar))
+                    Text(loc.localizedKey(.enableIceBar))
                 case .showSectionDividers:
-                    Text(loc.localized(.toggleSectionDividers))
+                    Text(loc.localizedKey(.toggleSectionDividers))
                 case .toggleApplicationMenus:
-                    Text(loc.localized(.toggleApplicationMenus))
+                    Text(loc.localizedKey(.toggleApplicationMenus))
                 }
             }
         }

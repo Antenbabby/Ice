@@ -44,7 +44,7 @@ struct AdvancedSettingsPane: View {
                 showOnHoverDelaySlider
                 tempShowIntervalSlider
             }
-            IceSection(loc.localized(.permissions)) {
+            IceSection(loc.localizedKey(.permissions)) {
                 allPermissions
             }
         }
@@ -52,16 +52,16 @@ struct AdvancedSettingsPane: View {
 
     @ViewBuilder
     private var hideApplicationMenus: some View {
-        Toggle(loc.localized(.hideApplicationMenus), isOn: manager.bindings.hideApplicationMenus)
-            .annotation(LocalizedStringKey(loc.localized(.hideApplicationMenusDetail)))
+        Toggle(loc.localizedKey(.hideApplicationMenus), isOn: manager.bindings.hideApplicationMenus)
+            .annotation(loc.localizedKey(.hideApplicationMenusDetail))
     }
 
     @ViewBuilder
     private var showSectionDividers: some View {
-        Toggle(loc.localized(.showSectionDividers), isOn: manager.bindings.showSectionDividers)
+        Toggle(loc.localizedKey(.showSectionDividers), isOn: manager.bindings.showSectionDividers)
             .annotation {
                 HStack(spacing: 2) {
-                    Text(loc.localized(.showSectionDividersDetailPrefix))
+                    Text(loc.localizedKey(.showSectionDividersDetailPrefix))
                     if let nsImage = ControlItemImage.builtin(.chevronLarge).nsImage(for: appState) {
                         HStack(spacing: 0) {
                             Text("(")
@@ -72,25 +72,25 @@ struct AdvancedSettingsPane: View {
                                 .font(.body.monospaced().bold())
                         }
                     }
-                    Text(loc.localized(.showSectionDividersDetailMiddle))
+                    Text(loc.localizedKey(.showSectionDividersDetailMiddle))
                 }
             }
     }
 
     @ViewBuilder
     private var enableAlwaysHiddenSection: some View {
-        Toggle(loc.localized(.enableAlwaysHiddenSection), isOn: manager.bindings.enableAlwaysHiddenSection)
+        Toggle(loc.localizedKey(.enableAlwaysHiddenSection), isOn: manager.bindings.enableAlwaysHiddenSection)
     }
 
     @ViewBuilder
     private var canToggleAlwaysHiddenSection: some View {
         if manager.enableAlwaysHiddenSection {
-            Toggle(loc.localized(.canToggleAlwaysHiddenSection), isOn: manager.bindings.canToggleAlwaysHiddenSection)
+            Toggle(loc.localizedKey(.canToggleAlwaysHiddenSection), isOn: manager.bindings.canToggleAlwaysHiddenSection)
                 .annotation {
                     if appState.settingsManager.generalSettingsManager.showOnClick {
-                        Text(loc.localized(.toggleAlwaysHiddenSectionDetailWithOption))
+                        Text(loc.localizedKey(.toggleAlwaysHiddenSectionDetailWithOption))
                     } else {
-                        Text(loc.localized(.toggleAlwaysHiddenSectionDetail))
+                        Text(loc.localizedKey(.toggleAlwaysHiddenSectionDetail))
                     }
                 }
         }
@@ -106,14 +106,14 @@ struct AdvancedSettingsPane: View {
                 step: 0.1
             )
         } label: {
-            Text(loc.localized(.showOnHoverDelay))
+            Text(loc.localizedKey(.showOnHoverDelay))
                 .frame(minHeight: .compactSliderMinHeight)
                 .frame(minWidth: maxSliderLabelWidth, alignment: .leading)
                 .onFrameChange { frame in
                     maxSliderLabelWidth = max(maxSliderLabelWidth, frame.width)
                 }
         }
-        .annotation(LocalizedStringKey(loc.localized(.showOnHoverDelayDetail)))
+        .annotation(loc.localizedKey(.showOnHoverDelayDetail))
     }
 
     @ViewBuilder
@@ -126,24 +126,24 @@ struct AdvancedSettingsPane: View {
                 step: 1
             )
         } label: {
-            Text(loc.localized(.tempShowInterval))
+            Text(loc.localizedKey(.tempShowInterval))
                 .frame(minHeight: .compactSliderMinHeight)
                 .frame(minWidth: maxSliderLabelWidth, alignment: .leading)
                 .onFrameChange { frame in
                     maxSliderLabelWidth = max(maxSliderLabelWidth, frame.width)
                 }
         }
-        .annotation(LocalizedStringKey(loc.localized(.tempShowIntervalDetail)))
+        .annotation(loc.localizedKey(.tempShowIntervalDetail))
     }
 
     @ViewBuilder
     private var showAllSectionsOnUserDrag: some View {
-        Toggle(loc.localized(.showAllSectionsOnUserDrag), isOn: manager.bindings.showAllSectionsOnUserDrag)
+        Toggle(loc.localizedKey(.showAllSectionsOnUserDrag), isOn: manager.bindings.showAllSectionsOnUserDrag)
     }
 
     @ViewBuilder
     private var showContextMenuOnRightClick: some View {
-        Toggle(loc.localized(.showContextMenuOnRightClick), isOn: manager.bindings.showContextMenuOnRightClick)
+        Toggle(loc.localizedKey(.showContextMenuOnRightClick), isOn: manager.bindings.showContextMenuOnRightClick)
     }
 
     @ViewBuilder
@@ -152,13 +152,13 @@ struct AdvancedSettingsPane: View {
             IceLabeledContent {
                 if permission.hasPermission {
                     Label {
-                        Text(loc.localized(.permissionGranted))
+                        Text(loc.localizedKey(.permissionGranted))
                     } icon: {
                         Image(systemName: "checkmark.circle")
                             .foregroundStyle(.green)
                     }
                 } else {
-                    Button(loc.localized(.grantPermission)) {
+                    Button(loc.localizedKey(.grantPermission)) {
                         permission.performRequest()
                     }
                 }

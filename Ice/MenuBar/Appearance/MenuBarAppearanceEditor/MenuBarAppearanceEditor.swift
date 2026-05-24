@@ -38,10 +38,10 @@ struct MenuBarAppearanceEditor: View {
     private var stackHeader: some View {
         if case .popover(let closePopover) = location {
             ZStack {
-                Text(loc.localized(.menuBarAppearance))
+                Text(loc.localizedKey(.menuBarAppearance))
                     .font(.title2)
                     .frame(maxWidth: .infinity, alignment: .center)
-                Button(loc.localized(.done), action: closePopover)
+                Button(loc.localizedKey(.done), action: closePopover)
                     .controlSize(.large)
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
@@ -70,7 +70,7 @@ struct MenuBarAppearanceEditor: View {
             } else {
                 StaticPartialEditor()
             }
-            IceSection(loc.localized(.menuBarShape)) {
+            IceSection(loc.localizedKey(.menuBarShape)) {
                 shapePicker
                 isInset
             }
@@ -81,7 +81,7 @@ struct MenuBarAppearanceEditor: View {
                         font: .callout.bold()
                     ) {
                         Label {
-                            Text(loc.localized(.appearanceTip))
+                            Text(loc.localizedKey(.appearanceTip))
                         } icon: {
                             Image(systemName: "lightbulb")
                         }
@@ -92,7 +92,7 @@ struct MenuBarAppearanceEditor: View {
                 !appState.menuBarManager.isMenuBarHiddenBySystemUserDefaults,
                 appearanceManager.configuration != .defaultConfiguration
             {
-                Button(loc.localized(.reset)) {
+                Button(loc.localizedKey(.reset)) {
                     appearanceManager.configuration = .defaultConfiguration
                 }
                 .controlSize(.large)
@@ -103,13 +103,13 @@ struct MenuBarAppearanceEditor: View {
 
     @ViewBuilder
     private var isDynamicToggle: some View {
-        Toggle(loc.localized(.useDynamicAppearance), isOn: appearanceManager.bindings.configuration.isDynamic)
-            .annotation(loc.localized(.useDynamicAppearanceDetail))
+        Toggle(loc.localizedKey(.useDynamicAppearance), isOn: appearanceManager.bindings.configuration.isDynamic)
+            .annotation(loc.localizedKey(.useDynamicAppearanceDetail))
     }
 
     @ViewBuilder
     private var cannotEdit: some View {
-        Text(loc.localized(.cannotEditHiddenMenuBar))
+        Text(loc.localizedKey(.cannotEditHiddenMenuBar))
             .font(.title3)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
@@ -124,7 +124,7 @@ struct MenuBarAppearanceEditor: View {
     private var isInset: some View {
         if appearanceManager.configuration.shapeKind != .none {
             Toggle(
-                loc.localized(.useInsetShape),
+                loc.localizedKey(.useInsetShape),
                 isOn: appearanceManager.bindings.configuration.isInset
             )
         }
@@ -151,9 +151,9 @@ private struct UnlabeledPartialEditor: View {
 
     @ViewBuilder
     private var tintPicker: some View {
-        IceLabeledContent(loc.localized(.tint)) {
+        IceLabeledContent(loc.localizedKey(.tint)) {
             HStack {
-                IcePicker(loc.localized(.tint), selection: $configuration.tintKind) {
+                IcePicker(loc.localizedKey(.tint), selection: $configuration.tintKind) {
                     ForEach(MenuBarTintKind.allCases) { tintKind in
                         Text(loc.localizedKey(tintKind.localizationKey)).tag(tintKind)
                     }
@@ -184,18 +184,18 @@ private struct UnlabeledPartialEditor: View {
 
     @ViewBuilder
     private var shadowToggle: some View {
-        Toggle(loc.localized(.shadow), isOn: $configuration.hasShadow)
+        Toggle(loc.localizedKey(.shadow), isOn: $configuration.hasShadow)
     }
 
     @ViewBuilder
     private var borderToggle: some View {
-        Toggle(loc.localized(.border), isOn: $configuration.hasBorder)
+        Toggle(loc.localizedKey(.border), isOn: $configuration.hasBorder)
     }
 
     @ViewBuilder
     private var borderColor: some View {
         if configuration.hasBorder {
-            IceLabeledContent(loc.localized(.borderColor)) {
+            IceLabeledContent(loc.localizedKey(.borderColor)) {
                 CustomColorPicker(
                     selection: $configuration.borderColor,
                     supportsOpacity: true,
@@ -209,7 +209,7 @@ private struct UnlabeledPartialEditor: View {
     private var borderWidth: some View {
         if configuration.hasBorder {
             IcePicker(
-                loc.localized(.borderWidth),
+                loc.localizedKey(.borderWidth),
                 selection: $configuration.borderWidth
             ) {
                 Text("1").tag(1.0)
@@ -300,7 +300,10 @@ private struct PreviewButton: View {
         }
     }
 
+    @EnvironmentObject var appState: AppState
     @EnvironmentObject var appearanceManager: MenuBarAppearanceManager
+
+    private var loc: LocalizationManager { appState.localizationManager }
 
     @State private var frame = CGRect.zero
     @State private var isPressed = false
@@ -311,7 +314,7 @@ private struct PreviewButton: View {
         ZStack {
             DummyButton(isPressed: $isPressed)
                 .allowsHitTesting(false)
-            Text(loc.localized(.holdToPreview))
+            Text(loc.localizedKey(.holdToPreview))
                 .baselineOffset(1.5)
                 .padding(.horizontal, 10)
                 .contentShape(Rectangle())

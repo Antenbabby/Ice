@@ -81,7 +81,7 @@ struct GeneralSettingsPane: View {
             }
         }
         .alert(isPresented: $isPresentingError, error: presentedError) {
-            Button(loc.localized(.ok)) {
+            Button(loc.localizedKey(.ok)) {
                 presentedError = nil
                 isPresentingError = false
             }
@@ -90,12 +90,12 @@ struct GeneralSettingsPane: View {
 
     @ViewBuilder
     private var languagePicker: some View {
-        IcePicker(loc.localized(.language), selection: appState.localizationManager.bindings.language) {
+        IcePicker(loc.localizedKey(.language), selection: appState.localizationManager.bindings.language) {
             ForEach(AppLanguage.allCases) { language in
                 Text(loc.localizedKey(language.localizationKey)).tag(language)
             }
         }
-        .annotation(LocalizedStringKey(loc.localized(.languageAnnotation)))
+        .annotation(loc.localizedKey(.languageAnnotation))
     }
 
     @ViewBuilder
@@ -126,15 +126,15 @@ struct GeneralSettingsPane: View {
 
     @ViewBuilder
     private var iceIconOptions: some View {
-        Toggle(loc.localized(.showIceIcon), isOn: manager.bindings.showIceIcon)
+        Toggle(loc.localizedKey(.showIceIcon), isOn: manager.bindings.showIceIcon)
             .annotation {
                 if !manager.showIceIcon {
-                    Text(loc.localized(.iceIconSettings))
+                    Text(loc.localizedKey(.iceIconSettings))
                 }
             }
         if manager.showIceIcon {
-            IceMenu(loc.localized(.iceIcon)) {
-                Picker(loc.localized(.iceIcon), selection: manager.bindings.iceIcon) {
+            IceMenu(loc.localizedKey(.iceIcon)) {
+                Picker(loc.localizedKey(.iceIcon), selection: manager.bindings.iceIcon) {
                     ForEach(ControlItemImageSet.userSelectableIceIcons) { imageSet in
                         Button {
                             manager.iceIcon = imageSet
@@ -157,13 +157,13 @@ struct GeneralSettingsPane: View {
 
                 Divider()
 
-                Button(loc.localized(.chooseImage)) {
+                Button(loc.localizedKey(.chooseImage)) {
                     isImportingCustomIceIcon = true
                 }
             } title: {
                 menuItem(for: manager.iceIcon)
             }
-            .annotation(LocalizedStringKey(loc.localized(.chooseCustomIcon)))
+            .annotation(loc.localizedKey(.chooseCustomIcon))
             .fileImporter(
                 isPresented: $isImportingCustomIceIcon,
                 allowedContentTypes: [.image]
@@ -182,8 +182,8 @@ struct GeneralSettingsPane: View {
             }
 
             if case .custom = manager.iceIcon.name {
-                Toggle(loc.localized(.applySystemTheme), isOn: manager.bindings.customIceIconIsTemplate)
-                    .annotation(LocalizedStringKey(loc.localized(.applySystemThemeDetail)))
+                Toggle(loc.localizedKey(.applySystemTheme), isOn: manager.bindings.customIceIconIsTemplate)
+                    .annotation(loc.localizedKey(.applySystemThemeDetail))
             }
         }
     }
@@ -198,13 +198,13 @@ struct GeneralSettingsPane: View {
 
     @ViewBuilder
     private var useIceBar: some View {
-        Toggle(loc.localized(.useIceBar), isOn: manager.bindings.useIceBar)
-            .annotation(LocalizedStringKey(loc.localized(.useIceBarDetail)))
+        Toggle(loc.localizedKey(.useIceBar), isOn: manager.bindings.useIceBar)
+            .annotation(loc.localizedKey(.useIceBarDetail))
     }
 
     @ViewBuilder
     private var iceBarLocationPicker: some View {
-        IcePicker(loc.localized(.location), selection: manager.bindings.iceBarLocation) {
+        IcePicker(loc.localizedKey(.location), selection: manager.bindings.iceBarLocation) {
             ForEach(IceBarLocation.allCases) { location in
                 Text(loc.localizedKey(location.localizationKey)).tag(location)
             }
@@ -212,31 +212,31 @@ struct GeneralSettingsPane: View {
         .annotation {
             switch manager.iceBarLocation {
             case .dynamic:
-                Text(loc.localized(.locationDynamic))
+                Text(loc.localizedKey(.locationDynamic))
             case .mousePointer:
-                Text(loc.localized(.locationMousePointer))
+                Text(loc.localizedKey(.locationMousePointer))
             case .iceIcon:
-                Text(loc.localized(.locationIceIcon))
+                Text(loc.localizedKey(.locationIceIcon))
             }
         }
     }
 
     @ViewBuilder
     private var showOnClick: some View {
-        Toggle(loc.localized(.showOnClick), isOn: manager.bindings.showOnClick)
-            .annotation(LocalizedStringKey(loc.localized(.showOnClickDetail)))
+        Toggle(loc.localizedKey(.showOnClick), isOn: manager.bindings.showOnClick)
+            .annotation(loc.localizedKey(.showOnClickDetail))
     }
 
     @ViewBuilder
     private var showOnHover: some View {
-        Toggle(loc.localized(.showOnHover), isOn: manager.bindings.showOnHover)
-            .annotation(LocalizedStringKey(loc.localized(.showOnHoverDetail)))
+        Toggle(loc.localizedKey(.showOnHover), isOn: manager.bindings.showOnHover)
+            .annotation(loc.localizedKey(.showOnHoverDetail))
     }
 
     @ViewBuilder
     private var showOnScroll: some View {
-        Toggle(loc.localized(.showOnScroll), isOn: manager.bindings.showOnScroll)
-            .annotation(LocalizedStringKey(loc.localized(.showOnScrollDetail)))
+        Toggle(loc.localizedKey(.showOnScroll), isOn: manager.bindings.showOnScroll)
+            .annotation(loc.localizedKey(.showOnScrollDetail))
     }
 
     @ViewBuilder
@@ -251,10 +251,10 @@ struct GeneralSettingsPane: View {
             .disabled(isApplyingOffset)
         } label: {
             IceLabeledContent {
-                Button(loc.localized(.apply)) {
+                Button(loc.localizedKey(.apply)) {
                     applyOffset()
                 }
-                .help(loc.localized(.applySpacing))
+                .help(loc.localizedKey(.applySpacing))
                 .disabled(isApplyingOffset || !hasSpacingSliderValueChanged)
 
                 if isApplyingOffset {
@@ -269,21 +269,21 @@ struct GeneralSettingsPane: View {
                         Image(systemName: "arrow.counterclockwise.circle.fill")
                     }
                     .buttonStyle(.borderless)
-                    .help(loc.localized(.resetToDefault))
+                    .help(loc.localizedKey(.resetToDefault))
                     .disabled(isApplyingOffset || !isActualOffsetDifferentFromDefault)
                 }
             } label: {
                 HStack {
-                    Text(loc.localized(.menuBarItemSpacing))
+                    Text(loc.localizedKey(.menuBarItemSpacing))
                     BetaBadge()
                 }
             }
         }
-        .annotation(LocalizedStringKey(loc.localized(.spacingRelaunchNote)), spacing: 2)
+        .annotation(loc.localizedKey(.spacingRelaunchNote)), spacing: 2)
         .annotation(spacing: 10, font: .callout.bold()) {
             IceGroupBox {
                 Label {
-                    Text(loc.localized(.spacingLogoutNote))
+                    Text(loc.localizedKey(.spacingLogoutNote))
                 } icon: {
                     Image(systemName: "exclamationmark.circle")
                 }
@@ -297,7 +297,7 @@ struct GeneralSettingsPane: View {
 
     @ViewBuilder
     private var rehideStrategyPicker: some View {
-        IcePicker(loc.localized(.strategy), selection: manager.bindings.rehideStrategy) {
+        IcePicker(loc.localizedKey(.strategy), selection: manager.bindings.rehideStrategy) {
             ForEach(RehideStrategy.allCases) { strategy in
                 Text(loc.localizedKey(strategy.localizationKey)).tag(strategy)
             }
@@ -305,18 +305,18 @@ struct GeneralSettingsPane: View {
         .annotation {
             switch manager.rehideStrategy {
             case .smart:
-                Text(loc.localized(.smartDetail))
+                Text(loc.localizedKey(.smartDetail))
             case .timed:
-                Text(loc.localized(.timedDetail))
+                Text(loc.localizedKey(.timedDetail))
             case .focusedApp:
-                Text(loc.localized(.focusedAppDetail))
+                Text(loc.localizedKey(.focusedAppDetail))
             }
         }
     }
 
     @ViewBuilder
     private var autoRehideOptions: some View {
-        Toggle(loc.localized(.autoRehide), isOn: manager.bindings.autoRehide)
+        Toggle(loc.localizedKey(.autoRehide), isOn: manager.bindings.autoRehide)
         if manager.autoRehide {
             if case .timed = manager.rehideStrategy {
                 VStack {

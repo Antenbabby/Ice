@@ -38,7 +38,7 @@ struct AboutSettingsPane: View {
         if let date = updatesManager.lastUpdateCheckDate {
             date.formatted(date: .abbreviated, time: .standard)
         } else {
-            loc.localized(.never)
+            loc.localizedKey(.never)
         }
     }
 
@@ -84,7 +84,7 @@ struct AboutSettingsPane: View {
                         .font(.system(size: 72, weight: .medium))
                         .foregroundStyle(.primary)
 
-                    Text("\(loc.localized(.versionPrefix)) \(Constants.versionString)")
+                    Text("\(loc.localizedKey(.versionPrefix)) \(Constants.versionString)")
                         .font(.system(size: 18))
                         .foregroundStyle(.secondary)
 
@@ -111,7 +111,7 @@ struct AboutSettingsPane: View {
     @ViewBuilder
     private var automaticallyCheckForUpdates: some View {
         Toggle(
-            loc.localized(.automaticallyCheckForUpdates),
+            loc.localizedKey(.automaticallyCheckForUpdates),
             isOn: updatesManager.bindings.automaticallyChecksForUpdates
         )
     }
@@ -119,7 +119,7 @@ struct AboutSettingsPane: View {
     @ViewBuilder
     private var automaticallyDownloadUpdates: some View {
         Toggle(
-            loc.localized(.automaticallyDownloadUpdates),
+            loc.localizedKey(.automaticallyDownloadUpdates),
             isOn: updatesManager.bindings.automaticallyDownloadsUpdates
         )
     }
@@ -127,11 +127,11 @@ struct AboutSettingsPane: View {
     @ViewBuilder
     private var checkForUpdates: some View {
         HStack {
-            Button(loc.localized(.checkForUpdates)) {
+            Button(loc.localizedKey(.checkForUpdates)) {
                 updatesManager.checkForUpdates()
             }
             Spacer()
-            Text("\(loc.localized(.lastChecked)) \(lastUpdateCheckString)")
+            Text("\(loc.localizedKey(.lastChecked)) \(lastUpdateCheckString)")
                 .font(.caption)
         }
     }
@@ -139,20 +139,20 @@ struct AboutSettingsPane: View {
     @ViewBuilder
     private var bottomBar: some View {
         HStack {
-            Button(loc.localized(.quitIce)) {
+            Button(loc.localizedKey(.quitIce)) {
                 NSApp.terminate(nil)
             }
             Spacer()
-            Button(loc.localized(.acknowledgements)) {
+            Button(loc.localizedKey(.acknowledgements)) {
                 NSWorkspace.shared.open(acknowledgementsURL)
             }
-            Button(loc.localized(.contribute)) {
+            Button(loc.localizedKey(.contribute)) {
                 openURL(contributeURL)
             }
-            Button(loc.localized(.reportABug)) {
+            Button(loc.localizedKey(.reportABug)) {
                 openURL(issuesURL)
             }
-            Button(loc.localized(.supportIce), systemImage: "heart.circle.fill") {
+            Button(loc.localizedKey(.supportIce), systemImage: "heart.circle.fill") {
                 openURL(donateURL)
             }
         }
