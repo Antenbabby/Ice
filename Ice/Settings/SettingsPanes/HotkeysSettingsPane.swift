@@ -8,20 +8,22 @@ import SwiftUI
 struct HotkeysSettingsPane: View {
     @EnvironmentObject var appState: AppState
 
+    private var loc: LocalizationManager { appState.localizationManager }
+
     private var hotkeySettingsManager: HotkeySettingsManager {
         appState.settingsManager.hotkeySettingsManager
     }
 
     var body: some View {
         IceForm {
-            IceSection("Menu Bar Sections") {
+            IceSection(loc.localized(.menuBarSections)) {
                 hotkeyRecorder(forSection: .hidden)
                 hotkeyRecorder(forSection: .alwaysHidden)
             }
-            IceSection("Menu Bar Items") {
+            IceSection(loc.localized(.menuBarItems)) {
                 hotkeyRecorder(forAction: .searchMenuBarItems)
             }
-            IceSection("Other") {
+            IceSection(loc.localized(.other)) {
                 hotkeyRecorder(forAction: .enableIceBar)
                 hotkeyRecorder(forAction: .showSectionDividers)
                 hotkeyRecorder(forAction: .toggleApplicationMenus)
@@ -35,17 +37,17 @@ struct HotkeysSettingsPane: View {
             HotkeyRecorder(hotkey: hotkey) {
                 switch action {
                 case .toggleHiddenSection:
-                    Text("Toggle the hidden section")
+                    Text(loc.localized(.toggleHiddenSection))
                 case .toggleAlwaysHiddenSection:
-                    Text("Toggle the always-hidden section")
+                    Text(loc.localized(.toggleAlwaysHiddenSection))
                 case .searchMenuBarItems:
-                    Text("Search menu bar items")
+                    Text(loc.localized(.searchMenuBarItems))
                 case .enableIceBar:
-                    Text("Enable the Ice Bar")
+                    Text(loc.localized(.enableIceBar))
                 case .showSectionDividers:
-                    Text("Show section dividers")
+                    Text(loc.localized(.toggleSectionDividers))
                 case .toggleApplicationMenus:
-                    Text("Toggle application menus")
+                    Text(loc.localized(.toggleApplicationMenus))
                 }
             }
         }
