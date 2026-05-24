@@ -124,7 +124,7 @@ final class AccessibilityPermission: Permission {
                 "Arrange menu bar items.",
             ],
             isRequired: true,
-            settingsURL: URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"),
+            settingsURL: nil,
             check: {
                 checkIsProcessTrusted()
             },

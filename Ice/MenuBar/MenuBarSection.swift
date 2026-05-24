@@ -168,22 +168,11 @@ final class MenuBarSection {
             hiddenSection.controlItem.state = .showItems
         case .hidden:
             iceBarPanel?.close()
-            Task {
-                if let screenForIceBar {
-                    let hiddenItems = appState.itemManager.itemCache.managedItems(for: .hidden)
-                    guard !hiddenItems.isEmpty else {
-                        return
-                    }
-                    await iceBarPanel?.show(
-                        section: .hidden,
-                        on: screenForIceBar,
-                        anchorTo: controlItem
-                    )
-                }
-                for section in appState.menuBarManager.sections {
-                    section.controlItem.state = .hideItems
-                }
+            guard let visibleSection = appState.menuBarManager.section(withName: .visible) else {
+                return
             }
+            controlItem.state = .showItems
+            visibleSection.controlItem.state = .showItems
         case .alwaysHidden:
             iceBarPanel?.close()
             guard
