@@ -53,7 +53,7 @@ struct AdvancedSettingsPane: View {
     @ViewBuilder
     private var hideApplicationMenus: some View {
         Toggle(loc.localized(.hideApplicationMenus), isOn: manager.bindings.hideApplicationMenus)
-            .annotation(loc.localized(.hideApplicationMenusDetail))
+            .annotation(LocalizedStringKey(loc.localized(.hideApplicationMenusDetail)))
     }
 
     @ViewBuilder
@@ -113,7 +113,7 @@ struct AdvancedSettingsPane: View {
                     maxSliderLabelWidth = max(maxSliderLabelWidth, frame.width)
                 }
         }
-        .annotation(loc.localized(.showOnHoverDelayDetail))
+        .annotation(LocalizedStringKey(loc.localized(.showOnHoverDelayDetail)))
     }
 
     @ViewBuilder
@@ -133,7 +133,7 @@ struct AdvancedSettingsPane: View {
                     maxSliderLabelWidth = max(maxSliderLabelWidth, frame.width)
                 }
         }
-        .annotation(loc.localized(.tempShowIntervalDetail))
+        .annotation(LocalizedStringKey(loc.localized(.tempShowIntervalDetail)))
     }
 
     @ViewBuilder

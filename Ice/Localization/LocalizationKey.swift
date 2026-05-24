@@ -224,9 +224,9 @@ enum LocalizationKey: String {
     // MARK: - Settings Navigation
 
     case general = "General"
-    case menuBarLayout = "Menu Bar Layout"
-    case menuBarAppearance = "Menu Bar Appearance"
-    case hotkeys = "Hotkeys"
+    case settingsMenuBarLayout = "Menu Bar Layout"
+    case settingsMenuBarAppearance = "Menu Bar Appearance"
+    case settingsHotkeys = "Hotkeys"
     case advanced = "Advanced"
     case about = "About"
 
@@ -435,9 +435,9 @@ extension LocalizationKey {
 
         // Settings Navigation
         case .general: return "通用"
-        case .menuBarLayout: return "菜单栏布局"
-        case .menuBarAppearance: return "菜单栏外观"
-        case .hotkeys: return "快捷键"
+        case .settingsMenuBarLayout: return "菜单栏布局"
+        case .settingsMenuBarAppearance: return "菜单栏外观"
+        case .settingsHotkeys: return "快捷键"
         case .advanced: return "高级"
         case .about: return "关于"
 

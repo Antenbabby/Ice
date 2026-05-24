@@ -15,9 +15,9 @@ enum SettingsNavigationIdentifier: String, NavigationIdentifier {
     var localizationKey: LocalizationKey {
         switch self {
         case .general: .general
-        case .menuBarLayout: .menuBarLayout
-        case .menuBarAppearance: .menuBarAppearance
-        case .hotkeys: .hotkeys
+        case .menuBarLayout: .settingsMenuBarLayout
+        case .menuBarAppearance: .settingsMenuBarAppearance
+        case .hotkeys: .settingsHotkeys
         case .advanced: .advanced
         case .about: .about
         }

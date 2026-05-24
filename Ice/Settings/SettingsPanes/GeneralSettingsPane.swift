@@ -95,7 +95,7 @@ struct GeneralSettingsPane: View {
                 Text(loc.localizedKey(language.localizationKey)).tag(language)
             }
         }
-        .annotation(loc.localized(.languageAnnotation))
+        .annotation(LocalizedStringKey(loc.localized(.languageAnnotation)))
     }
 
     @ViewBuilder
@@ -163,7 +163,7 @@ struct GeneralSettingsPane: View {
             } title: {
                 menuItem(for: manager.iceIcon)
             }
-            .annotation(loc.localized(.chooseCustomIcon))
+            .annotation(LocalizedStringKey(loc.localized(.chooseCustomIcon)))
             .fileImporter(
                 isPresented: $isImportingCustomIceIcon,
                 allowedContentTypes: [.image]
@@ -183,7 +183,7 @@ struct GeneralSettingsPane: View {
 
             if case .custom = manager.iceIcon.name {
                 Toggle(loc.localized(.applySystemTheme), isOn: manager.bindings.customIceIconIsTemplate)
-                    .annotation(loc.localized(.applySystemThemeDetail))
+                    .annotation(LocalizedStringKey(loc.localized(.applySystemThemeDetail)))
             }
         }
     }
@@ -199,7 +199,7 @@ struct GeneralSettingsPane: View {
     @ViewBuilder
     private var useIceBar: some View {
         Toggle(loc.localized(.useIceBar), isOn: manager.bindings.useIceBar)
-            .annotation(loc.localized(.useIceBarDetail))
+            .annotation(LocalizedStringKey(loc.localized(.useIceBarDetail)))
     }
 
     @ViewBuilder
@@ -224,19 +224,19 @@ struct GeneralSettingsPane: View {
     @ViewBuilder
     private var showOnClick: some View {
         Toggle(loc.localized(.showOnClick), isOn: manager.bindings.showOnClick)
-            .annotation(loc.localized(.showOnClickDetail))
+            .annotation(LocalizedStringKey(loc.localized(.showOnClickDetail)))
     }
 
     @ViewBuilder
     private var showOnHover: some View {
         Toggle(loc.localized(.showOnHover), isOn: manager.bindings.showOnHover)
-            .annotation(loc.localized(.showOnHoverDetail))
+            .annotation(LocalizedStringKey(loc.localized(.showOnHoverDetail)))
     }
 
     @ViewBuilder
     private var showOnScroll: some View {
         Toggle(loc.localized(.showOnScroll), isOn: manager.bindings.showOnScroll)
-            .annotation(loc.localized(.showOnScrollDetail))
+            .annotation(LocalizedStringKey(loc.localized(.showOnScrollDetail)))
     }
 
     @ViewBuilder
@@ -279,7 +279,7 @@ struct GeneralSettingsPane: View {
                 }
             }
         }
-        .annotation(loc.localized(.spacingRelaunchNote), spacing: 2)
+        .annotation(LocalizedStringKey(loc.localized(.spacingRelaunchNote)), spacing: 2)
         .annotation(spacing: 10, font: .callout.bold()) {
             IceGroupBox {
                 Label {
