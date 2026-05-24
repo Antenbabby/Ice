@@ -85,7 +85,7 @@ enum LocalizationKey: String {
     case toggleAlwaysHiddenSection = "Toggle the always-hidden section"
     case searchMenuBarItems = "Search menu bar items"
     case enableIceBar = "Enable the Ice Bar"
-    case toggleSectionDividers = "Show section dividers"
+    case toggleSectionDividers = "Show section dividers (hotkey)"
     case toggleApplicationMenus = "Toggle application menus"
 
     // MARK: - Menu Bar Layout
@@ -225,7 +225,7 @@ enum LocalizationKey: String {
 
     case general = "General"
     case settingsMenuBarLayout = "Menu Bar Layout"
-    case settingsMenuBarAppearance = "Menu Bar Appearance"
+    case settingsMenuBarAppearance = "Menu Bar Appearance (settings)"
     case settingsHotkeys = "Hotkeys"
     case advanced = "Advanced"
     case about = "About"

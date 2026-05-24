@@ -279,7 +279,7 @@ struct GeneralSettingsPane: View {
                 }
             }
         }
-        .annotation(loc.localizedKey(.spacingRelaunchNote)), spacing: 2)
+        .annotation(loc.localizedKey(.spacingRelaunchNote), spacing: 2)
         .annotation(spacing: 10, font: .callout.bold()) {
             IceGroupBox {
                 Label {
