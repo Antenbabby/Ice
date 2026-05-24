@@ -25,21 +25,14 @@ jobs:
             -derivedDataPath DerivedData \
             -configuration Release \
             build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-      - name: Locate .app
-        run: |
-          echo "=== DerivedData structure ==="
-          find DerivedData -name "*.app" -type d -maxdepth 8 2>/dev/null || echo "No .app found"
-          echo ""
-          echo "=== Build settings ==="
-          xcodebuild -project Ice.xcodeproj -scheme Ice -showBuildSettings 2>/dev/null | grep -E "^( |	)*PRODUCT_BUNDLE_IDENTIFIER|PRODUCT_NAME|BUILT_PRODUCTS_DIR|WRAPPER_NAME|TARGET_BUILD_DIR" | head -10
       - name: Package .app
         run: |
-          APP_PATH=$(find DerivedData -name "*.app" -type d -maxdepth 8 2>/dev/null | head -1)
-          if [ -z "$APP_PATH" ]; then
-            echo "ERROR: No .app found in DerivedData"
-            exit 1
-          fi
-          echo "Packaging: $APP_PATH"
+          BUILT_DIR=$(xcodebuild -project Ice.xcodeproj -scheme Ice \
+            -configuration Release -derivedDataPath DerivedData \
+            -showBuildSettings 2>/dev/null | grep " BUILT_PRODUCTS_DIR" | awk '{print $NF}')
+          APP_PATH="$BUILT_DIR/Ice.app"
+          echo "BUILT_PRODUCTS_DIR=$BUILT_DIR"
+          echo "APP_PATH=$APP_PATH"
           ls -ld "$APP_PATH"
           ditto -c -k --keepParent "$APP_PATH" Ice-app.zip
           ls -lh Ice-app.zip
