@@ -15,6 +15,25 @@ final class IceBarPanel: NSPanel {
 
     private lazy var colorManager = IceBarColorManager(iceBarPanel: self)
 
+    /// Monitor for mouse down events outside the panel.
+    private lazy var mouseDownMonitor = UniversalEventMonitor(
+        mask: [.leftMouseDown, .rightMouseDown, .otherMouseDown]
+    ) { [weak self, weak appState] event in
+        guard
+            let self,
+            let appState,
+            event.window !== self,
+            event.window !== appState.menuBarManager.section(withName: .hidden)?.controlItem.window
+        else {
+            return event
+        }
+        close()
+        return event
+    }
+
+    /// Optional control item to anchor the panel to (e.g., HItem).
+    private var anchorControlItem: ControlItem?
+
     private var cancellables = Set<AnyCancellable>()
 
     init(appState: AppState) {
@@ -102,6 +121,35 @@ final class IceBarPanel: NSPanel {
             return
         }
 
+        func originForRightOfScreen() -> CGPoint {
+            CGPoint(x: screen.frame.maxX - frame.width, y: originY(for: screen))
+        }
+
+        func originY(for screen: NSScreen) -> CGFloat {
+            let menuBarHeight = screen.getMenuBarHeight() ?? 0
+            return ((screen.frame.maxY - 1) - menuBarHeight) - frame.height
+        }
+
+        // If anchored to a control item, position relative to it.
+        if let anchorControlItem,
+           let windowID = anchorControlItem.windowID,
+           let itemFrame = Bridging.getWindowFrame(for: windowID)
+        {
+            let lowerBound = screen.frame.minX
+            let upperBound = screen.frame.maxX - frame.width
+            guard lowerBound <= upperBound else {
+                setFrameOrigin(originForRightOfScreen())
+                return
+            }
+            setFrameOrigin(CGPoint(
+                x: (itemFrame.midX - frame.width / 2).clamped(to: lowerBound...upperBound),
+                y: originY(for: screen)
+            ))
+            return
+        }
+
+        let iceBarLocation = appState.settingsManager.generalSettingsManager.iceBarLocation
+
         func getOrigin(for iceBarLocation: IceBarLocation) -> CGPoint {
             let menuBarHeight = screen.getMenuBarHeight() ?? 0
             let originY = ((screen.frame.maxY - 1) - menuBarHeight) - frame.height
@@ -151,7 +199,7 @@ final class IceBarPanel: NSPanel {
         setFrameOrigin(getOrigin(for: appState.settingsManager.generalSettingsManager.iceBarLocation))
     }
 
-    func show(section: MenuBarSection.Name, on screen: NSScreen) async {
+    func show(section: MenuBarSection.Name, on screen: NSScreen, anchorTo controlItem: ControlItem? = nil) async {
         guard let appState else {
             return
         }
@@ -159,6 +207,7 @@ final class IceBarPanel: NSPanel {
         // Important that we set the navigation state and current section before updating the cache.
         appState.navigationState.isIceBarPresented = true
         currentSection = section
+        anchorControlItem = controlItem
 
         await appState.itemManager.cacheItemsIfNeeded()
 
@@ -179,9 +228,12 @@ final class IceBarPanel: NSPanel {
         colorManager.updateAllProperties(with: frame, screen: screen)
 
         orderFrontRegardless()
+        mouseDownMonitor.start()
     }
 
     override func close() {
+        mouseDownMonitor.stop()
+        anchorControlItem = nil
         super.close()
         contentView = nil
         currentSection = nil
