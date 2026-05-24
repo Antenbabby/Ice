@@ -25,6 +25,15 @@ jobs:
             -derivedDataPath DerivedData \
             -configuration Release \
             build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+      - name: Ad-hoc sign
+        run: |
+          BUILT_DIR=$(xcodebuild -project Ice.xcodeproj -scheme Ice \
+            -configuration Release -derivedDataPath DerivedData \
+            -showBuildSettings 2>/dev/null | grep " BUILT_PRODUCTS_DIR" | awk '{print $NF}')
+          APP_PATH="$BUILT_DIR/Ice.app"
+          echo "Signing: $APP_PATH"
+          codesign --force --deep --sign - "$APP_PATH"
+          codesign -dv "$APP_PATH" 2>&1 | head -5
       - name: Package .app
         run: |
           BUILT_DIR=$(xcodebuild -project Ice.xcodeproj -scheme Ice \
